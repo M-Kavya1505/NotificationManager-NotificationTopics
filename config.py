@@ -6,8 +6,9 @@ import configparser
 config = configparser.ConfigParser()
 config.read(r"./notifier.cfg")
 path_to_firebase_app_sdk=config["DEFAULT"]["path_to_firebase_app_sdk"]
- 
-cred = credentials.Certificate(r"./push-notification-1479e-firebase-adminsdk-qllb5-219a131716.json")
+
+# Replace XYZ with the generate private key file path(generated from Firebase console project)
+cred = credentials.Certificate(r"./XYZ")
 
 #cred = credentials.Certificate(f"{path_to_firebase_app_sdk}")
 try:
