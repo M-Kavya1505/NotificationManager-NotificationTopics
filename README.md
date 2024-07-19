@@ -135,14 +135,13 @@ Postman is a platform for building and using APIs and helps for simplifying the 
         ; The default section is used when no section is specified
         secret_key=YOUR_SECRET_KEY
         # copy the relative path of your firebase sdk .json file
-        path_to_firebase_sdk=bluboy-test-firebase-adminsdk-6k08o-9184a30f9b.json     
+        path_to_firebase_sdk=XYZ.json     
         
         [DATABASE]
-        host = test-bluboygames-com.c8ogql7pdyd4.ap-south-1.rds.amazonaws.com
-        port = 3306
-        user = interns_team
-        password = interns_team#098#
-        database = interns_db
+        host= # Your host name
+        user= # User name
+        password= # Password of the database
+        database= # Database name
     
 ### FireBase Setup: (Do it in web No need of installation).
 If you have a existing project directly start from step 4:
