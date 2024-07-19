@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACKER</title>
+</head>
+<body>
+    <h1>
+        TRACKER PAGE
+    </h1>
+    <p>Number of Users : {{num_users}}</p>
+    <p>Number of Users with Tokens in DB: {{num_users_with_tokens}}</p>
+    <p>Number of Logged Out Users: {{num_logged_out}}</p>
+
+    <input type="text" placeholder="title" id="title">
+    <input type="text" placeholder="message" id="message"><br>
+    <button id="track-btn">TRACK UNINSTALLS</button>
+    <div id="tracker-info"></div>
+    <script>
+        const baseUrl = window.location.origin;
+        trackBtn = document.getElementById("track-btn")
+        trackerInfo = document.getElementById("tracker-info")
+        titleInp = document.getElementById("title")
+        messageInp = document.getElementById("message")
+        var num_users_with_tokens = "{{num_users_with_tokens}}"
+        var IntervalId
+        function checkStatus(){
+            fetch(`${baseUrl}/test/fetch_completed_users`)
+            .then(async (response) => {
+                if (!response.ok) {
+                    
+                    trackBtn.disabled = false
+                    clearInterval(IntervalId)
+                    throw new Error('Network response was not ok ' + response.statusText);
+                
+                } else {
+                    responseJSON = await response.json()
+                    obj = responseJSON["completed"].split("\n")
+                    if (obj[0] >= parseInt(num_users_with_tokens,10)) {
+                        trackBtn.disabled = false
+                        clearInterval(IntervalId)
+                        console.log("INTERVAL OVER")
+                    }
+                    trackerInfo.innerHTML = `
+                        <div>
+                        <p>NUMBER OF TOKENS CHECKED : ${obj[0]}/${num_users_with_tokens}</p>
+                        <p>NUMBER OF SUCCESS : ${obj[1]}</p>
+                        <p>NUMBER OF FAILURES : ${obj[2]}</p>
+                        </div>
+                    `
+                }
+            })
+        }
+        
+        trackBtn.addEventListener("click",(event)=>{
+            trackBtn.disabled = true
+            
+            data = {
+                title : titleInp.value,
+                message: messageInp.value
+            }
+
+            fetch(`${baseUrl}/test/start-sending`, {
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data) 
+            })
+            .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            } else {
+                responseJSON = response.json();
+                IntervalId = setInterval(checkStatus,2000)   
+            }
+            })
+        })
+    </script>
+</body>
+</html>

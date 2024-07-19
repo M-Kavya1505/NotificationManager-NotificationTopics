@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Example</title>
+    <link rel= "stylesheet" href = "{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='images/Bluboy-Logo-1.jpg') }}" alt="Logo" alignment="border-left" padding-left: 60px;>
+        <div style="float: right; padding-right: 20px; color: white;">
+            {{ username }}
+<a href="{{ url_for('logout') }}" style="color: white;">Logout</a>
+</div>
+</header>
+<!-- BACK BUTTON -->
+<a href="{{url_for('option')}}">
+<div class="options_container">
+    <div class="back-btn flex align-center ">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+        </svg>
+        Back
+    </div>
+</div>
+</a>
+<!-- END BACK BUTTON -->
+    <h1>Select an Option</h1>
+    <form onsubmit="handleSubmit(event)">
+        <label for="options">Choose an option:</label>
+        <select id="options" name="options" onchange="handleDropdownChange()">
+            <option value="all">All</option>
+            <option value="userid">userid</option>
+            <option value="bluboyid">bluboyid</option>
+        </select>
+ 
+        <br><br>
+        <div id="extra-input-container" style="display: none;">
+            <label for="extra-input">Enter comma separated IDs:</label>
+            <br>
+            <textarea id="extra-input" name="extra-input"></textarea>
+ 
+            <br><br>
+           
+        </div>
+        <div class="header-inputs-container">
+            <div class="header-inputs">
+                <input id="title-input" type="text" placeholder="Enter Title">
+                
+                <textarea id="message-input" placeholder="Enter Message"></textarea>
+            </div>
+            <select id="templateDropdown" >
+                <option value="">Select Template</option>
+            </select>
+            <div>
+                <button id="send-button" disabled>
+                    <img src="{{ url_for('static', filename='images/send.jpg') }}" alt="Send" class="grayscale">
+                </button>
+            </div>
+        </div>
+    
+       
+    </form>
+    <!-- DISPLAY INFO -->
+    <div id="tracker-info"></div>
+    <div id="server-info"></div>
+    <div id = "operation-status"></div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+    <script>
+    </script>
+</body>
+</html>
